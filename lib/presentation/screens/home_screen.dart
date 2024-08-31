@@ -5,6 +5,9 @@ import 'details_screen.dart';
 
 
 class HomePage extends StatelessWidget {
+  final String? displayName;
+
+  HomePage({this.displayName});
   final HomeController controller = Get.put(HomeController());
 
   @override
@@ -39,8 +42,12 @@ class HomePage extends StatelessWidget {
                 title: Text(product.title ?? ''),
                 subtitle: Text('\$${product.price} - ${product.brand ?? ''}'),
                 onTap: () {
-                  Get.to(() => DetailPage(product: product));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DetailPage(product: product)),
+                  );
                 },
+
               );
             },
           );

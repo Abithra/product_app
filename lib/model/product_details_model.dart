@@ -55,40 +55,43 @@ class Products {
   List<String>? images;
   String? thumbnail;
 
-  Products(
-      {this.id,
-        this.title,
-        this.description,
-        this.category,
-        this.price,
-        this.discountPercentage,
-        this.rating,
-        this.stock,
-        this.tags,
-        this.brand,
-        this.sku,
-        this.weight,
-        this.dimensions,
-        this.warrantyInformation,
-        this.shippingInformation,
-        this.availabilityStatus,
-        this.reviews,
-        this.returnPolicy,
-        this.minimumOrderQuantity,
-        this.meta,
-        this.images,
-        this.thumbnail});
+  Products({
+    this.id,
+    this.title,
+    this.description,
+    this.category,
+    this.price,
+    this.discountPercentage,
+    this.rating,
+    this.stock,
+    this.tags,
+    this.brand,
+    this.sku,
+    this.weight,
+    this.dimensions,
+    this.warrantyInformation,
+    this.shippingInformation,
+    this.availabilityStatus,
+    this.reviews,
+    this.returnPolicy,
+    this.minimumOrderQuantity,
+    this.meta,
+    this.images,
+    this.thumbnail,
+  });
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
     category = json['category'];
-    price = json['price'];
-    discountPercentage = json['discountPercentage'];
-    rating = json['rating'];
+    price = (json['price'] is int) ? (json['price'] as int).toDouble() : json['price'];
+    discountPercentage = (json['discountPercentage'] is int)
+        ? (json['discountPercentage'] as int).toDouble()
+        : json['discountPercentage'];
+    rating = (json['rating'] is int) ? (json['rating'] as int).toDouble() : json['rating'];
     stock = json['stock'];
-    tags = json['tags'].cast<String>();
+    tags = json['tags']?.cast<String>();
     brand = json['brand'];
     sku = json['sku'];
     weight = json['weight'];
@@ -107,7 +110,7 @@ class Products {
     returnPolicy = json['returnPolicy'];
     minimumOrderQuantity = json['minimumOrderQuantity'];
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-    images = json['images'].cast<String>();
+    images = json['images']?.cast<String>();
     thumbnail = json['thumbnail'];
   }
 
@@ -153,9 +156,9 @@ class Dimensions {
   Dimensions({this.width, this.height, this.depth});
 
   Dimensions.fromJson(Map<String, dynamic> json) {
-    width = json['width'];
-    height = json['height'];
-    depth = json['depth'];
+    width = (json['width'] is int) ? (json['width'] as int).toDouble() : json['width'];
+    height = (json['height'] is int) ? (json['height'] as int).toDouble() : json['height'];
+    depth = (json['depth'] is int) ? (json['depth'] as int).toDouble() : json['depth'];
   }
 
   Map<String, dynamic> toJson() {
@@ -166,6 +169,7 @@ class Dimensions {
     return data;
   }
 }
+
 
 class Reviews {
   int? rating;
