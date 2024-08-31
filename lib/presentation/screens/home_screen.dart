@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/home_controller.dart';
-import 'details_screen.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:product_application/presentation/screens/signin_screen.dart';
+import '../../controller/home_controller.dart'; // Adjust the path as needed
+import 'details_screen.dart'; // Adjust the path as needed
 
 class HomePage extends StatelessWidget {
   final String? displayName;
@@ -17,9 +19,13 @@ class HomePage extends StatelessWidget {
         title: Text('Products'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              // Handle logout functionality
+            icon: Icon(Icons.login),
+            onPressed: () async {
+              await _signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+              );
             },
           ),
         ],
@@ -47,12 +53,18 @@ class HomePage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => DetailPage(product: product)),
                   );
                 },
-
               );
             },
           );
         }
       }),
     );
+  }
+
+  Future<void> _signOut() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    await _auth.signOut();
+    await _googleSignIn.signOut();
   }
 }
